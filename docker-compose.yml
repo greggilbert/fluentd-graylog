@@ -1,0 +1,37 @@
+version: '2'
+services:
+  fluentd:
+    build: ./fluentd
+    ports:
+      - "24224:24224"
+      - "5140:5140"
+
+  elasticsearch:
+    build: ./elasticsearch
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+      - "9350:9350"
+
+  mongo:
+    image: "mongo:3"
+
+  graylog:
+    build: ./graylog
+    ports:
+      - "9000:9000"
+      - "1514/udp:1514/udp"
+      - "12201/udp:12201/udp"
+      - "12900:12900"
+    links:
+      - elasticsearch
+      - mongo
+    environment:
+      GRAYLOG_PASSWORD_SECRET: somepasswordpepper
+      GRAYLOG_ROOT_PASSWORD_SHA2: 8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918
+      GRAYLOG_WEB_ENDPOINT_URI: http://127.0.0.1:9000/api
+
+  client:
+    build: ./client
+    links:
+      - fluentd
