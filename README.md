@@ -8,7 +8,7 @@ Keep in mind that this is merely a proof of concept, and should _not_ be used as
 
 1. `docker-compose build`
 2. `docker-compose up -d`
-3. Go to http://127.0.0.1:9000 and log in
+3. Go to http://127.0.0.1:9000 and log in using `admin` as both the username and password
 4. Go to System > Inputs
 5. Add GELF UDP with the default values, but a Receive Buffer Size of 212992
 
